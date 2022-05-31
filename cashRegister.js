@@ -27,7 +27,7 @@ function checkNickels(value) {
     return 0;
   }
 }
-
+// something is wrong with checkPennies. it is displaying one cent under the amount it can take in some cases, or 0 in the wrong cases
 function checkPennies(value) {
   let tempValue = 0;
   if (value / 0.01 >= 0) {
@@ -167,7 +167,7 @@ function checkCashRegister(price, cash, cid) {
     return { status: "INSUFFICIENT_FUNDS", change: [] };
   }
 }
-
+// checkRegister still needs fixing, it does not accurately tell if a drawer is short on the change amounts to dispense
 checkPennies(0.53);
 checkChange(1938.29);
 /*
