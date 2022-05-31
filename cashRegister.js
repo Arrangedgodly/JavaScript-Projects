@@ -30,8 +30,9 @@ function checkNickels(value) {
 
 function checkPennies(value) {
   let tempValue = 0;
-  if (value % 0.01 >= 0) {
+  if (value / 0.01 >= 0) {
     tempValue = value - (value % 0.01);
+    console.log(tempValue);
     return tempValue;
   } else {
     return 0;
@@ -167,6 +168,9 @@ function checkCashRegister(price, cash, cid) {
   }
 }
 
+checkPennies(0.53);
+checkChange(1938.29);
+/*
 checkCashRegister(19.5, 20, [
   ["PENNY", 1.01],
   ["NICKEL", 2.05],
@@ -233,3 +237,4 @@ checkCashRegister(19.5, 20, [
   ["TWENTY", 0],
   ["ONE HUNDRED", 0],
 ]);
+*/
