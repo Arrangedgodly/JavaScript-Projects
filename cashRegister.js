@@ -139,38 +139,102 @@ function checkChange(change) {
   }
 }
 
+let penny = /PENNY/;
+let nickel = /NICKEL/;
+let dime = /DIME/;
+let quarter = /QUARTER/;
+let dollar = /ONE/;
+let fiveBill = /FIVE/;
+let tenBill = /TEN/;
+let twentyBill = /TWENTY/;
+let hundredBill = /HUNDRED/;
+let changeValues = [
+  hundredBill,
+  twentyBill,
+  tenBill,
+  fiveBill,
+  dollar,
+  quarter,
+  dime,
+  nickel,
+  penny,
+];
+
+function checkCid(change, cid) {
+  for (let i = 0; i < change.length; i++) {
+    if (hundredBill.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkHundreds(cid[i][1]);
+      let checkTwo = checkHundreds(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      } else if (checkTwo == checkOne) {
+      }
+    }
+    if (twentyBill.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkTwenties(cid[i][1]);
+      let checkTwo = checkTwenties(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (tenBill.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkTens(cid[i][1]);
+      let checkTwo = checkTens(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (fiveBill.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkFives(cid[i][1]);
+      let checkTwo = checkFives(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (dollar.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkDollars(cid[i][1]);
+      let checkTwo = checkDollars(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (quarter.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkQuarters(cid[i][1]);
+      let checkTwo = checkQuarters(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (dime.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkDimes(cid[i][1]);
+      let checkTwo = checkDimes(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (nickel.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkNickels(cid[i][1]);
+      let checkTwo = checkNickels(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+    if (penny.test(change[change.length - 1 - i][0])) {
+      let checkOne = checkPennies(cid[i][1]);
+      let checkTwo = checkPennies(change[i][1]);
+      if (checkTwo > checkOne) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+      }
+    }
+  }
+}
+
 function checkCashRegister(price, cash, cid) {
   let change = 0;
-  let cidChecker = [];
   if (cash - price > 0) {
     change = cash - price;
     let changeAmounts = checkChange(change);
-    for (let i = 0; i < changeAmounts.length; i++) {
-      if (changeAmounts[i][0] == cid[i][0]) {
-        if (cid[i][1] > changeAmounts[i][1]) {
-          cidChecker.push(false);
-          console.log(cidChecker);
-          cid[i][1] -= changeAmounts[i][1];
-        } else if (cid[i][1] == changeAmounts[i][1]) {
-          cid[i][1] -= changeAmounts[i][1];
-          cidChecker.push(true);
-          console.log(cidChecker);
-        } else if (cid[i][1] < changeAmounts[i][1]) {
-          console.log("insuff funds");
-          return { status: "INSUFFICIENT_FUNDS", change: [] };
-        }
-      }
-    }
-    if ([...cidChecker] === true) {
-      console.log("closed");
-      return { status: "CLOSED", change: cid };
-    } else {
-      console.log("open");
-      return { status: "OPEN", change: changeAmounts };
-    }
-  } else {
-    console.log("insuff funds");
-    return { status: "INSUFFICIENT_FUNDS", change: [] };
+    checkCid(changeAmounts, cid);
   }
 }
 
