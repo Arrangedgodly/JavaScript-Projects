@@ -1,7 +1,7 @@
 function checkQuarters(value) {
   let tempValue = 0;
-  if (value % 0.25 >= 0) {
-    tempValue = value - (value % 0.25);
+  if ((value * 100) % 25 >= 0) {
+    tempValue = (value * 100 - ((value * 100) % 25)) / 100;
     return tempValue;
   } else {
     return 0;
@@ -10,8 +10,8 @@ function checkQuarters(value) {
 
 function checkDimes(value) {
   let tempValue = 0;
-  if (value % 0.1 >= 0) {
-    tempValue = value - (value % 0.1);
+  if ((value * 100) % 10 >= 0) {
+    tempValue = (value * 100 - ((value * 100) % 10)) / 100;
     return tempValue;
   } else {
     return 0;
@@ -20,19 +20,18 @@ function checkDimes(value) {
 
 function checkNickels(value) {
   let tempValue = 0;
-  if (value % 0.05 >= 0) {
-    tempValue = value - (value % 0.05);
+  if ((value * 100) % 5 >= 0) {
+    tempValue = (value * 100 - ((value * 100) % 5)) / 100;
     return tempValue;
   } else {
     return 0;
   }
 }
-// something is wrong with checkPennies. it is displaying one cent under the amount it can take in some cases, or 0 in the wrong cases
+
 function checkPennies(value) {
   let tempValue = 0;
-  if (value / 0.01 >= 0) {
-    tempValue = value - (value % 0.01);
-    console.log(tempValue);
+  if ((value * 100) % 1 >= 0) {
+    tempValue = (value * 100 - ((value * 100) % 1)) / 100;
     return tempValue;
   } else {
     return 0;
@@ -96,30 +95,39 @@ function checkChange(change) {
       if (checkHundreds(change) > 0) {
         changeCheck.unshift(["ONE HUNDRED", checkHundreds(change)]);
         change = change % 100;
+        change = change.toFixed(2);
       } else if (checkTwenties(change) > 0) {
         changeCheck.unshift(["TWENTY", checkTwenties(change)]);
         change = change % 20;
+        change = change.toFixed(2);
       } else if (checkTens(change) > 0) {
         changeCheck.unshift(["TEN", checkTens(change)]);
         change = change % 10;
+        change = change.toFixed(2);
       } else if (checkFives(change) > 0) {
         changeCheck.unshift(["FIVE", checkFives(change)]);
         change = change % 5;
+        change = change.toFixed(2);
       } else if (checkDollars(change) > 0) {
         changeCheck.unshift(["ONE", checkDollars(change)]);
         change = change % 1;
+        change = change.toFixed(2);
       } else if (checkQuarters(change) > 0) {
         changeCheck.unshift(["QUARTER", checkQuarters(change)]);
-        change = change % 0.25;
+        change = ((change * 100) % 25) / 100;
+        change = change.toFixed(2);
       } else if (checkDimes(change) > 0) {
         changeCheck.unshift(["DIME", checkDimes(change)]);
-        change = change % 0.1;
+        change = ((change * 100) % 10) / 100;
+        change = change.toFixed(2);
       } else if (checkNickels(change) > 0) {
         changeCheck.unshift(["NICKEL", checkNickels(change)]);
-        change = change % 0.05;
+        change = ((change * 100) % 5) / 100;
+        change = change.toFixed(2);
       } else if (checkPennies(change) > 0) {
         changeCheck.unshift(["PENNY", checkPennies(change)]);
-        change = change % 0.01;
+        change = ((change * 100) % 1) / 100;
+        change = change.toFixed(2);
       } else {
         break;
       }
@@ -148,8 +156,6 @@ function checkCashRegister(price, cash, cid) {
           cidChecker.push(true);
           console.log(cidChecker);
         } else if (cid[i][1] < changeAmounts[i][1]) {
-          cidChecker.push(false);
-          console.log(cidChecker);
           console.log("insuff funds");
           return { status: "INSUFFICIENT_FUNDS", change: [] };
         }
@@ -167,10 +173,7 @@ function checkCashRegister(price, cash, cid) {
     return { status: "INSUFFICIENT_FUNDS", change: [] };
   }
 }
-// checkRegister still needs fixing, it does not accurately tell if a drawer is short on the change amounts to dispense
-checkPennies(0.53);
-checkChange(1938.29);
-/*
+
 checkCashRegister(19.5, 20, [
   ["PENNY", 1.01],
   ["NICKEL", 2.05],
@@ -237,4 +240,3 @@ checkCashRegister(19.5, 20, [
   ["TWENTY", 0],
   ["ONE HUNDRED", 0],
 ]);
-*/
