@@ -32,7 +32,28 @@ function checkBills(value, billValue) {
   }
 }
 
+function compareValues (x, y) {
+  let z = 0;
+  if (y > 0) {
+    if (x > y) {
+      z = x - y;
+      return z;
+    } else if (x == y) {
+      return z;
+    } else {
+      return x;
+    }
+  }
+}
+
 function checkChange(value, cid) {
+  let cidTotal = 0;
+  for (let a = 0; a < cid.length; a++) {
+    cidTotal += cid[a][1];
+  }
+  if (value > cidTotal) {
+    return false;
+  }
   let tempValue = value;
   let valueTracker = [];
   for (let i = 0; i <= 4; i++) {
@@ -41,7 +62,7 @@ function checkChange(value, cid) {
       cid[cid.length - 1 - i][1] >= checkBills(tempValue, bills[i][1])
     ) {
       valueTracker.push([bills[i][0], checkBills(tempValue, bills[i][1])]);
-      tempValue = tempValue - checkBills(tempValue, bills[i][1]);
+      tempValue = compareValues(tempValue, checkBills(tempValue, bills[i][1]));
     } else if (checkBills(tempValue, bills[i][1]) == 0) {
       valueTracker.push([bills[i][0], 0]);
     }
@@ -52,7 +73,7 @@ function checkChange(value, cid) {
       cid[cid.length - 6 - i][1] >= checkCoins(tempValue, coins[i][1])
     ) {
       valueTracker.push([coins[i][0], checkCoins(tempValue, coins[i][1])]);
-      tempValue = tempValue - checkCoins(tempValue, coins[i][1]);
+      tempValue = compareValues(tempValue, checkCoins(tempValue, coins[i][1]));
     } else if (checkCoins(tempValue, coins[i][1]) == 0) {
       valueTracker.push([coins[i][0], 0]);
     }
@@ -90,5 +111,17 @@ function checkCashRegister(price, cash, cid) {
 
 //console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
 
-console.log(checkChange(657.89, 1575.93));
+console.log(
+  checkChange(212.57, [
+    ["PENNY", 1.01],
+    ["NICKEL", 2.05],
+    ["DIME", 3.1],
+    ["QUARTER", 4.25],
+    ["ONE", 90],
+    ["FIVE", 55],
+    ["TEN", 20],
+    ["TWENTY", 60],
+    ["ONE HUNDRED", 100],
+  ])
+);
 //console.log(checkChange(0.5));
