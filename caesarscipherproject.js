@@ -48,4 +48,4 @@ function rot13(str) {
   }
   return newStr;
 }
-console.log(rot13("SERR PBQR PNZC"));
+console.log(rot13("WHATS THE DIFFERENCE BETWEEN A KING AND A GOD"));

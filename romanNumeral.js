@@ -1,12 +1,21 @@
+let one = /I/g;
+let five = /V/g;
+let ten = /X/g;
+let fifty = /L/g;
+let hundred = /C/g;
+let test = [one, five, ten, fifty, hundred];
+
+function testString(str, arr) {
+  let tempArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (str.match(arr[i]).length > 3) {
+    }
+  }
+}
+
 function convertToRoman(num) {
   let arr = [];
   let str = "";
-  let one = /I/g;
-  let five = /V/g;
-  let ten = /X/g;
-  let fifty = /L/g;
-  let hundred = /C/g;
-  let test = [one, five, ten, fifty, hundred];
   while (num > 0) {
     while (num > 1000) {
       num -= 1000;
@@ -38,6 +47,7 @@ function convertToRoman(num) {
   for (let i = 0; i < arr.length; i++) {
     str += arr[i];
   }
+  console.log(arr);
   return str;
 }
 
